@@ -26,9 +26,8 @@ class Timer {
   }
 
   start() {
-    const now = Date.now();
     if (this.stopped) {
-      this.pauseTime += (now - this.stopTime);
+      this.pauseTime += (Date.now() - this.stopTime);
       this.stopped = false;
     } else {
       this.startTime = Date.now();
