@@ -1,7 +1,9 @@
 <script>
+	import CountdownTimer from './CountdownTimer.svelte';
+	import StopwatchTimer from './StopwatchTimer.svelte';
 </script>
 
-<p>Timer</p>
+<StopwatchTimer/>
 
 <style>
 </style>
