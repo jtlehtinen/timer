@@ -19,7 +19,6 @@ class Timer {
   }
 
   reset() {
-    console.log("reset()");
     this.stopped = false;
     this.startTime = 0;
     this.pauseTime = 0;
@@ -27,7 +26,6 @@ class Timer {
   }
 
   start() {
-    console.log("start()");
     const now = Date.now();
     if (this.stopped) {
       this.pauseTime += (now - this.stopTime);
@@ -41,13 +39,11 @@ class Timer {
   }
 
   stop() {
-    console.log("stop()");
     this.stopTime = Date.now();
     this.stopped = true;
   }
 
   running() {
-    console.log("running");
     return this.startTime !== 0 && !this.stopped;
   }
 };
