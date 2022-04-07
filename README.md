@@ -1,3 +1,3 @@
 # timer
 
-Simple stopwatch and countdown timers.
+Simple stopwatch.
