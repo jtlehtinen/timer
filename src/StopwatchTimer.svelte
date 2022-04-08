@@ -2,6 +2,7 @@
   import { onDestroy } from 'svelte';
   import Timer from './timer.js';
 
+  const DOUBLE_TAP_INTERVAL_MILLIS = 250;
   const LEFT_MOUSE_BUTTON = 0;
   const MILLIS_IN_SECOND = 1000;
   const MILLIS_IN_MINUTE = 60 * 1000;
@@ -31,13 +32,17 @@
     time.hours = hours.toString().padStart(2, '0');
   }
 
-  // Stop/start timer if LMB click on the right-hand side of the window.
-  function handleClick(event) {
-    if (event.button !== LEFT_MOUSE_BUTTON) return;
+  let lastLeftTimestamp = 0;
 
-    const rightSideClick = event.pageX > (window.innerWidth / 2);
-    if (!rightSideClick) return;
+  function handlePointerDownLeftSide(event) {
+    const doubleTap = (event.timeStamp - lastLeftTimestamp) <= DOUBLE_TAP_INTERVAL_MILLIS;
+    if (doubleTap) {
+      timer.reset();
+    }
+    lastLeftTimestamp = event.timeStamp;
+  }
 
+  function handlePointerDownRightSide(event) {
     if (timer.running()) {
       timer.stop();
     } else {
@@ -45,21 +50,23 @@
     }
   }
 
-  // Reset timer if LMB double click on the left-hand side of the window.
-  function handleDoubleClick(event) {
-    if (event.button !== LEFT_MOUSE_BUTTON) return;
+  function handlePointerDown(event) {
+    const type = event.pointerType;
+    if (type === "mouse" && event.button !== LEFT_MOUSE_BUTTON) return;
 
-    const leftSideClick = event.pageX < (window.innerWidth / 2);
-    if (!leftSideClick) return;
-
-    timer.reset();
+    const leftSide = event.pageX < (window.innerWidth / 2);
+    if (leftSide) {
+      handlePointerDownLeftSide(event);
+    } else {
+      handlePointerDownRightSide(event);
+    }
   }
 
   const interval = setInterval(() => updateTime(), 10);
-	onDestroy(() => clearInterval(interval));
+  onDestroy(() => clearInterval(interval));
 </script>
 
-<svelte:window on:mousedown={handleClick} on:dblclick={handleDoubleClick}/>
+<svelte:window on:pointerdown={handlePointerDown}/>
 
 <div>
   <p>
