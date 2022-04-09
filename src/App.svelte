@@ -3,6 +3,3 @@
 </script>
 
 <StopwatchTimer/>
-
-<style>
-</style>
