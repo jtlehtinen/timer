@@ -89,7 +89,7 @@ div {
 
 p {
   user-select: none;
-  color: red;
+  color: white;
 }
 
 .big {
@@ -101,6 +101,6 @@ p {
 }
 
 .dim {
-  color: #400000;
+  color: #333;
 }
 </style>
