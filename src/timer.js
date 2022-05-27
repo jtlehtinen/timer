@@ -10,12 +10,12 @@ class Timer {
     if (this.stopped) {
       const elapsed = this.stopTime - this.startTime;
       return elapsed - this.pauseTime;
-    } else {
-      if (this.startTime === 0) return 0;
-
-      const elapsed = Date.now() - this.startTime;
-      return elapsed - this.pauseTime;
     }
+
+    if (this.startTime === 0) return 0;
+
+    const elapsed = Date.now() - this.startTime;
+    return elapsed - this.pauseTime;
   }
 
   reset() {
