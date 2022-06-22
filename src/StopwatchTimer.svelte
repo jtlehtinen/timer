@@ -62,12 +62,23 @@
     }
   }
 
+  function keyDownHandler(event) {
+    if (event.code === 'Space') handlePointerDownRightSide();
+  }
+
   const ones = value => value % 10;
   const tenths = value => Math.floor(value / 10);
 
   let interval = null;
-  onMount(() => interval = setInterval(() => time = newTime(timer.millis()), 30));
-  onDestroy(() => clearInterval(interval));
+  onMount(() => {
+    interval = setInterval(() => time = newTime(timer.millis()), 30);
+    window.addEventListener('keydown', keyDownHandler);
+  });
+
+  onDestroy(() => {
+    clearInterval(interval);
+    window.removeEventListener('keydown', keyDownHandler);
+  });
 </script>
 
 <svelte:window on:pointerdown={handlePointerDown}/>
